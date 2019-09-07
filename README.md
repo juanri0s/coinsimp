@@ -2,7 +2,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/juanri0s/coinsimp)](https://goreportcard.com/report/github.com/juanri0s/coinsimp)
 [![GoDoc](https://godoc.org/github.com/juanri0s/coinsimp?status.svg)](https://godoc.org/github.com/juanri0s/coinsimp)
 
-# coinsimp
+# simpcoin
 
 `simpcoin` retrieves simple information about the given cryptocurrency
 
