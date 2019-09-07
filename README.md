@@ -4,7 +4,7 @@
 
 # coinsimp
 
-`coinsimp` retrieves simple information about the given cryptocurrency
+`simpcoin` retrieves simple information about the given cryptocurrency
 
 # Todo
 
