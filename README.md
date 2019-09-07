@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/juanri0s/coinsimp.svg?branch=master)](https://travis-ci.com/juanri0s/coinsimp)
+
 # coinsimp
 
 `coinsimp` retrieves simple information about the given cryptocurrency
