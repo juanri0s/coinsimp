@@ -4,7 +4,7 @@
 
 # simpcoin
 
-`simpcoin` retrieves simple information about the given cryptocurrency
+`simpcoin` retrieves simple information about a given cryptocurrency
 
 # Todo
 
