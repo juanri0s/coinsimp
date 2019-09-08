@@ -1,15 +1,39 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
+	"github.com/olekukonko/tablewriter"
 	"io/ioutil"
+	"log"
 	"net/http"
+	"os"
+	"reflect"
 	"time"
 )
 
+// Data represents the response that we expect from an api single coin call
+type Data struct {
+	// Coin represents the specific coin data
+	Coin struct {
+		ID string `json:"id"`
+		Rank string `json:"rank"`
+		Symbol string `json:"symbol"`
+		Name string `json:"name"`
+		Supply string `json:"supply"`
+		MaxSupply string `json:"maxSupply"`
+		MarketCapUsd string `json:"marketCapUsd"`
+		VolumeUsd24Hr string `json:"volumeUsd24Hr"`
+		PriceUsd string `json:"priceUsd"`
+		ChangePercent24Hr string `json:"changePercent24Hr"`
+		Vwap24Hr string `json:"vwap24Hr"`
+	} `json:"data"`
+	Timestamp int64 `json:"timestamp"`
+}
+
 func main() {
-	url := "https://api.coincap.io/v2/assets"
+	url := "https://api.coincap.io/v2/assets/"
 	method := "GET"
 
 	var c string
@@ -27,32 +51,80 @@ func main() {
 	fmt.Println("coinsimp started -", t)
 
 	fmt.Println("requested coin:", c)
+	fmt.Println("request url:", url+c)
 
 	client := &http.Client{
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {
 			return http.ErrUseLastResponse
 		},
 	}
-	req, err := http.NewRequest(method, url, nil)
+
+	req, err := http.NewRequest(method, url+c, nil)
 
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	resp, err := client.Do(req)
+	res, err := client.Do(req)
 
 	if err != nil {
 		fmt.Printf("The HTTP %s request to %s failed with error %s\n", method, url, err)
 	}
 
-	if resp.StatusCode <= 200 && resp.StatusCode >= 299 {
-		fmt.Println("Something happened:", resp.StatusCode, http.StatusText(resp.StatusCode))
+	if res.StatusCode <= 200 && res.StatusCode >= 299 {
+		fmt.Println("Unsuccessful HTTP request:", res.StatusCode, http.StatusText(res.StatusCode))
 	}
 
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
+	body, readErr := ioutil.ReadAll(res.Body)
+	if readErr != nil {
+		log.Fatal(readErr)
+	}
 
-	fmt.Printf("%s\n", body)
+	d := Data{}
+	jserr := json.Unmarshal(body, &d)
+	if jserr != nil {
+		log.Fatal(jserr)
+	}
+
+	buildCoinTable(d)
+}
+
+// buildTable takes in data for a single coin and outputs it in ASCII table format
+func buildCoinTable(d Data) {
+
+	t := tablewriter.NewWriter(os.Stdout)
+
+	buildHeaders(t, d)
+	buildRows(t, d)
+
+	t.Render() // Send output
+}
+
+// buildHeaders generates the headers slice for the table.
+func buildHeaders(table *tablewriter.Table, d Data) {
+	v := reflect.ValueOf(d.Coin)
+	n := v.NumField()
+	typeOfS := v.Type()
+
+	h := make([]string, 0)
+	for i := 0; i < n; i++ {
+		h = append(h, typeOfS.Field(i).Name)
+	}
+	table.SetHeader(h)
+}
+
+// buildRows generates the rows slice for the table.
+func buildRows(table *tablewriter.Table, d Data) {
+	v := reflect.ValueOf(d.Coin)
+	n := v.NumField()
+
+	r := make([]string, 0)
+	for i := 0; i < n; i++ {
+		x := v.Field(i)
+		s := fmt.Sprintf("%v", x.Interface())
+		r = append(r, s)
+	}
+	table.Append(r)
 }
 
 // isFlagPassed checks to see that the required flags were inserted.
