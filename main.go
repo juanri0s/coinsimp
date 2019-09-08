@@ -100,6 +100,7 @@ func buildCoinTable(d Data) {
 	t.Render() // Send output
 }
 
+// buildHeaders generates the headers slice for the table.
 func buildHeaders(table *tablewriter.Table, d Data) {
 	v := reflect.ValueOf(d.Coin)
 	n := v.NumField()
@@ -112,6 +113,7 @@ func buildHeaders(table *tablewriter.Table, d Data) {
 	table.SetHeader(h)
 }
 
+// buildRows generates the rows slice for the table.
 func buildRows(table *tablewriter.Table, d Data) {
 	v := reflect.ValueOf(d.Coin)
 	n := v.NumField()
