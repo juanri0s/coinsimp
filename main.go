@@ -17,17 +17,17 @@ import (
 type Data struct {
 	// Coin represents the specific coin data
 	Coin struct {
-		ID string `json:"id"`
-		Rank string `json:"rank"`
-		Symbol string `json:"symbol"`
-		Name string `json:"name"`
-		Supply string `json:"supply"`
-		MaxSupply string `json:"maxSupply"`
-		MarketCapUsd string `json:"marketCapUsd"`
-		VolumeUsd24Hr string `json:"volumeUsd24Hr"`
-		PriceUsd string `json:"priceUsd"`
+		ID                string `json:"id"`
+		Rank              string `json:"rank"`
+		Symbol            string `json:"symbol"`
+		Name              string `json:"name"`
+		Supply            string `json:"supply"`
+		MaxSupply         string `json:"maxSupply"`
+		MarketCapUsd      string `json:"marketCapUsd"`
+		VolumeUsd24Hr     string `json:"volumeUsd24Hr"`
+		PriceUsd          string `json:"priceUsd"`
 		ChangePercent24Hr string `json:"changePercent24Hr"`
-		Vwap24Hr string `json:"vwap24Hr"`
+		Vwap24Hr          string `json:"vwap24Hr"`
 	} `json:"data"`
 	Timestamp int64 `json:"timestamp"`
 }
@@ -43,15 +43,12 @@ func main() {
 
 	fc := isFlagPassed(p)
 	if fc != true {
-		fmt.Println("Welcome to coinsimp, please provide a coin that you're interested in using the -coin flag")
+		fmt.Println("Welcome to simpcoin, please provide a coin that you're interested in using the -coin= flag")
 		return
 	}
 
 	t := time.Now().Local()
-	fmt.Println("coinsimp started -", t)
-
-	fmt.Println("requested coin:", c)
-	fmt.Println("request url:", url+c)
+	fmt.Println("simpcoin started -", t)
 
 	client := &http.Client{
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {
