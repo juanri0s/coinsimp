@@ -6,9 +6,13 @@
 
 `simpcoin` retrieves simple information about the given cryptocurrency
 
+![Sample terminal response from simpcoin](/simpcoin.png)
+
 # Todo
 
 For now I'm trying to keep this application as small as possible
 
 - [ ] adding license information
 - [ ] docker support
+
+
