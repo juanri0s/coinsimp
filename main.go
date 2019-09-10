@@ -57,13 +57,11 @@ func main() {
 	}
 
 	req, err := http.NewRequest(method, url+c, nil)
-
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	res, err := client.Do(req)
-
 	if err != nil {
 		fmt.Printf("The HTTP %s request to %s failed with error %s\n", method, url, err)
 	}
