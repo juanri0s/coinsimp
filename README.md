@@ -7,8 +7,3 @@
 `simpcoin` retrieves simple information about a given cryptocurrency
 
 ![Sample terminal response from simpcoin](/simpcoin.png)
-
-# Todo
-
-For now I'm trying to keep this application as small as possible
-
