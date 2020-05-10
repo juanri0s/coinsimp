@@ -4,13 +4,14 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/olekukonko/tablewriter"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"reflect"
 	"time"
+
+	"github.com/olekukonko/tablewriter"
 )
 
 // Data represents the response that we expect from an api single coin call
@@ -68,7 +69,7 @@ func main() {
 		fmt.Printf("The HTTP %s request to %s failed with error %s\n", method, url, err)
 	}
 
-	if res.StatusCode <= 200 && res.StatusCode >= 299 {
+	if res.StatusCode <= 200 || res.StatusCode >= 299 {
 		fmt.Println("Unsuccessful HTTP request:", res.StatusCode, http.StatusText(res.StatusCode))
 	}
 
