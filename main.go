@@ -66,7 +66,7 @@ func main() {
 		fmt.Printf("The HTTP %s request to %s failed with error %s\n", method, url, err)
 	}
 
-	if res.StatusCode <= 200 && res.StatusCode >= 299 {
+	if res.StatusCode < 200 && res.StatusCode > 299 {
 		fmt.Println("Unsuccessful HTTP request:", res.StatusCode, http.StatusText(res.StatusCode))
 	}
 
